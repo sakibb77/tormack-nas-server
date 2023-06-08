@@ -31,6 +31,34 @@ const signupUser = async (req, res) => {
   }
 };
 
+const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+  const ipAddress =
+    req.headers["x-forword-for"] || req.connection.remoteAddress;
+
+  try {
+    const user = await User.login(email, password, ipAddress);
+
+    //create token
+    const token = createToken(user._id);
+
+    //clear previous token
+    res.clearCookie("token");
+
+    //save the token as a cookie
+    res.cookie("token", token, {
+      maxage: 86400 * 1000,
+      httpOnly: true,
+      secure: true,
+    });
+
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 module.exports = {
   signupUser,
+  loginUser,
 };
