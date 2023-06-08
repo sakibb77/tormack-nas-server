@@ -34,7 +34,7 @@ const signupUser = async (req, res) => {
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
   const ipAddress =
-    req.headers["x-forword-for"] || req.connection.remoteAddress;
+    req.headers["x-forward-for"] || req.connection.remoteAddress;
 
   try {
     const user = await User.login(email, password, ipAddress);

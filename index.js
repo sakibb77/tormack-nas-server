@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const userRoutes = require("./routes/user");
 
 //express app
 const app = express();
@@ -20,6 +21,8 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.status(200).json({ message: "wellcome to server" });
 });
+
+app.use("/api/auth/user", userRoutes);
 
 //PORT
 const port = process.env.PORT || 8000;

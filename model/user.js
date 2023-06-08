@@ -19,11 +19,11 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: ture,
+    required: true,
   },
   ipAddress: {
     type: String,
-    required: ture,
+    required: true,
   },
 });
 
@@ -72,7 +72,7 @@ userSchema.statics.signup = async function (
 };
 
 //static login mathod
-mongoose.statics.login = async function (email, password, ipAddress) {
+userSchema.statics.login = async function (email, password, ipAddress) {
   //validation
   if (!email || !password || !ipAddress) {
     throw Error("all fields are required");
